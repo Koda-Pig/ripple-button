@@ -1,0 +1,58 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+
+body {
+  display: grid;
+  overflow: hidden;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.ripple-btn {
+  font-size: 3rem;
+  cursor: pointer;
+  appearance: none; // remove some default styling
+  overflow: hidden;
+  padding: 1em 3em;
+  isolation: isolate; // new stacking context
+  position: relative;
+  place-items: center;
+  display: inline-grid; // makes it easy to center - even with absolutely positioned elements
+  border-radius: 100vmax;
+  background: transparent;
+  color: hsl(200 100% 75%);
+  border: 5px solid currentColor;
+
+  &::before {
+    content: '';
+    width: 150%;
+    top: var(--y);
+    left: var(--x);
+    z-index: -1;
+    opacity: 0.3;
+    display: block; // required to display pseudo element
+    aspect-ratio: 1/1;
+    background: #fff;
+    position: absolute;
+    border-radius: 50%;
+    transition: transform 0.5s;
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
+
+.pulse {
+  &::before {
+    animation: pulse 0.5s;
+  }
+}
+
+@keyframes pulse {
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
